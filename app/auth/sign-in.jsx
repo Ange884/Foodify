@@ -67,7 +67,7 @@ export default function LoginScreen({ navigation }) {
               <Icon name="login" size={20} color="#fff" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Google</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.socialButton, styles.appleButton]} onPress={handleAppleSignIn}>
+            <TouchableOpacity style={[styles.socialButton, styles.appleButton,{backgroundColor:COLORS.primary}]} onPress={handleAppleSignIn}>
               <Icon name="apple" size={20} color="#fff" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Apple</Text>
             </TouchableOpacity>
@@ -75,7 +75,10 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-          <Text style={styles.link}>Don’t have an account? Sign up</Text>
+         <Text style={styles.link}>
+            Don't have an account? Sign up
+          </Text>
+
         </TouchableOpacity>
       </View>
     </View>
@@ -190,7 +193,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   link: { 
-    color: '#007bff', 
+    color: '#cf501599',
+    fontWeight:600,
     marginTop: 10, 
     textAlign: 'center',
     fontSize: 16,
