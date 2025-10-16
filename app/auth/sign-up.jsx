@@ -14,6 +14,7 @@ export default function SignupScreen({ navigation }) {
   };
 
   return (
+    <View style={styles.screen}>
     <View style={styles.container}>
       <Text style={styles.title}>Create Account ✨</Text>
 
@@ -46,6 +47,7 @@ export default function SignupScreen({ navigation }) {
         <Text style={styles.link}>Already have an account? Log in</Text>
       </TouchableOpacity>
     </View>
+    </View>
   );
 }
 
@@ -56,4 +58,11 @@ const styles = StyleSheet.create({
   button: { backgroundColor: '#28a745', padding: 14, borderRadius: 8 },
   buttonText: { color: '#fff', fontSize: 16, textAlign: 'center' },
   link: { color: '#28a745', marginTop: 15, textAlign: 'center' },
+  screen: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
 });

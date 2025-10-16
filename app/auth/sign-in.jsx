@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // You'll need to install react-native-vector-icons for icons
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { COLORS } from '../../constants/Colors.js'; // You'll need to install react-native-vector-icons for icons
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -24,12 +25,12 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome Back 👋</Text>
+        <Text style={styles.title}>Welcome Back !</Text>
         
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <View style={styles.inputWrapper}>
-            <Icon name="email" size={20} color="#007bff" style={styles.inputIcon} />
+            <Icon name="email" size={20} color="#773703ff" style={styles.inputIcon} />
             <TextInput
               placeholder="Enter your email"
               style={styles.input}
@@ -44,7 +45,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
           <View style={styles.inputWrapper}>
-            <Icon name="lock" size={20} color="#007bff" style={styles.inputIcon} />
+            <Icon name="lock" size={20} color="#773703ff" style={styles.inputIcon} />
             <TextInput
               placeholder="Enter your password"
               style={styles.input}
@@ -55,14 +56,14 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={[styles.button,{backgroundColor:COLORS.primary}]} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <View style={styles.socialContainer}>
           <Text style={styles.orText}>Or sign in with</Text>
           <View style={styles.socialButtons}>
-            <TouchableOpacity style={styles.socialButton} onPress={handleGoogleSignIn}>
+            <TouchableOpacity style={[styles.socialButton,{backgroundColor:COLORS.primary}]} onPress={handleGoogleSignIn}>
               <Icon name="login" size={20} color="#fff" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Google</Text>
             </TouchableOpacity>
