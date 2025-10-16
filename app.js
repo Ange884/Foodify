@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabOneScreen from './app/tabs/index'; // your main tab / stack screen
+import Toast from 'react-native-toast-message'
 
 export default function App() {
   return (

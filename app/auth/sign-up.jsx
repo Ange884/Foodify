@@ -10,7 +10,9 @@ import {
   ActivityIndicator,
   useWindowDimensions,
 } from 'react-native';
+import Toast from 'react-native-toast-message'
 import { COLORS } from '@/constants/Colors';
+import HomeScreen from '../../pages/HomePage.jsx'
 
 export default function SignupScreen({ navigation }) {
   const { width: screenWidth } = useWindowDimensions();
@@ -21,31 +23,49 @@ export default function SignupScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = () => {
-    // Start loading animation
-    setLoading(true);
+  
 
-    // Validation logic
-    if (!fullName || !email || !password || !confirmPassword) {
-      setLoading(false);
-      return Alert.alert('Error', 'Please fill in all fields');
-    }
-    if (password !== confirmPassword) {
-      setLoading(false);
-      return Alert.alert('Error', 'Passwords do not match');
-    }
-    if (password.length < 6) {
-      setLoading(false);
-      return Alert.alert('Error', 'Password must be at least 6 characters long');
-    }
+const handleSignup = () => {
+  setLoading(true);
 
-    // Simulate signup delay
-    setTimeout(() => {
-      setLoading(false);
-      Alert.alert('Success', `Account created for ${email}`);
-      navigation.navigate('Login');
-    }, 1500);
-  };
+  if (!fullName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+    setLoading(false);
+    return Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'Please fill in all fields',
+    });
+  }
+
+  if (password !== confirmPassword) {
+    setLoading(false);
+    return Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'Passwords do not match',
+    });
+  }
+
+  if (password.length < 6) {
+    setLoading(false);
+    return Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'Password must be at least 6 characters',
+    });
+  }
+
+  setTimeout(() => {
+    setLoading(false);
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: `Account created for ${email}`,
+    });
+    navigation.navigate('Login');
+  }, 1500);
+};
+
 
   return (
     <View style={styles.screen}>
@@ -106,15 +126,14 @@ export default function SignupScreen({ navigation }) {
 
           <TouchableOpacity
             style={[styles.button, loading && { opacity: 0.8 }]}
-            onPress={handleSignup}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.buttonText}>Sign Up</Text>
-            )}
-          </TouchableOpacity>
+                         onPress={() => {
+                       handleSignup();          // first do signup
+                        navigation.navigate('home'); // then navigate
+                   }}
+                     disabled={loading}
+    >                   
+                    <Text>Sign Up</Text>
+                   </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.linkContainer}

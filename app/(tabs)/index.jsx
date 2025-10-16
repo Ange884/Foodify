@@ -5,6 +5,7 @@ import SignupScreen from "../auth/sign-up.jsx"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from "../auth/sign-in.jsx"
 import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from "../../pages"
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,8 @@ export default function TabOneScreen() {
         <Stack.Screen name="Landing" component={LandingScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+         <Stack.Screen name="home" component={LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
   );
 }
