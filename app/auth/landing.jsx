@@ -12,8 +12,11 @@ export default function LandingScreen({ navigation }) {
   style={styles.image}
 />
 
-      <Text style={styles.title}>Welcome to MyApp!!</Text>
-      <Text style={styles.subtitle}>Join us and explore amazing features!</Text>
+      <Text style={styles.title}>Welcome to Foodify!</Text>
+      <Text style={styles.subtitle}>Let’s find your next delicious meal.</Text>
+      <Text style={styles.subtitle}>Discover delicious meals near you </Text>   
+      <Text style={styles.subtitle}>and satisfy your cravings.</Text>           
+                                    
 
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
@@ -55,11 +58,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom:10
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
-    marginVertical: 10,
+    marginVertical: 1,
     textAlign: 'center',
   },
   buttonsContainer: {
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: '80%',
+    width: '99%',
     padding: 15,
     borderRadius: 8,
     marginVertical: 10,

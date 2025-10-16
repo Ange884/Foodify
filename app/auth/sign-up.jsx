@@ -1,44 +1,63 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert, useWindowDimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  useWindowDimensions,
+} from 'react-native';
 import { COLORS } from '@/constants/Colors';
-
-
 
 export default function SignupScreen({ navigation }) {
   const { width: screenWidth } = useWindowDimensions();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = () => {
-    Alert.alert("Debug","Signup was pressed!");
+    // Start loading animation
+    setLoading(true);
 
-    // if (!fullName || !email || !password || !confirmPassword) {
-    //   return Alert.alert('Error', 'Please fill in all fields');
-    // }
-    // if (password !== confirmPassword) {
-    //   return Alert.alert('Error', 'Passwords do not match');
-    // }
-    // if (password.length < 6) {
-    //   return Alert.alert('Error', 'Password must be at least 6 characters long');
-    // }
-    // Alert.alert('Success', `Account created for ${email}`);
-    // navigation.navigate('Login');
+    // Validation logic
+    if (!fullName || !email || !password || !confirmPassword) {
+      setLoading(false);
+      return Alert.alert('Error', 'Please fill in all fields');
+    }
+    if (password !== confirmPassword) {
+      setLoading(false);
+      return Alert.alert('Error', 'Passwords do not match');
+    }
+    if (password.length < 6) {
+      setLoading(false);
+      return Alert.alert('Error', 'Password must be at least 6 characters long');
+    }
+
+    // Simulate signup delay
+    setTimeout(() => {
+      setLoading(false);
+      Alert.alert('Success', `Account created for ${email}`);
+      navigation.navigate('Login');
+    }, 1500);
   };
 
   return (
     <View style={styles.screen}>
-      <ScrollView 
+      <ScrollView
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <View style={[styles.container, { width: Math.min(350, screenWidth * 0.9) }]}>
-
-          <Text style={styles.title}>Create Your Account</Text>
-          <Text style={styles.subtitle}>Sign up to get started with our app</Text>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Get Started!</Text>
 
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Full Name</Text>
@@ -85,20 +104,28 @@ export default function SignupScreen({ navigation }) {
             />
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={handleSignup}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+          <TouchableOpacity
+            style={[styles.button, loading && { opacity: 0.8 }]}
+            onPress={handleSignup}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Sign Up</Text>
+            )}
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.linkContainer}
             onPress={() => navigation.navigate('Login')}
           >
-            <Text style={styles.link}>Already have an account? Log in</Text>
+            <Text style={styles.link}>Already have an account? Sign in</Text>
           </TouchableOpacity>
 
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>or</Text>
+            <Text style={styles.dividerText}>Sign-up with</Text>
             <View style={styles.dividerLine} />
           </View>
 
@@ -114,8 +141,7 @@ export default function SignupScreen({ navigation }) {
           <View style={styles.footer}>
             <Text style={styles.footerText}>
               By signing up, you agree to our{' '}
-              <Text style={styles.footerLink}>Terms of Service</Text>{' '}
-              and{' '}
+              <Text style={styles.footerLink}>Terms of Service</Text> and{' '}
               <Text style={styles.footerLink}>Privacy Policy</Text>.
             </Text>
           </View>
@@ -145,7 +171,6 @@ const styles = StyleSheet.create({
     minHeight: '100%',
   },
   container: {
-    width: Math.min(350, screenWidth * 0.9),
     backgroundColor: '#fff',
     borderRadius: 20,
     padding: 32,
@@ -158,7 +183,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     fontWeight: '800',
-    marginBottom: 8,
+    marginBottom: 10,
     textAlign: 'center',
     color: '#1a1a1a',
     lineHeight: 40,
@@ -167,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#6b7280',
     textAlign: 'center',
-    marginBottom: 48,
+    marginBottom: 26,
     fontWeight: '400',
   },
   inputContainer: {
@@ -194,18 +219,18 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     width: '100%',
-    color:'#6b6a6aff'
+    color: '#6b6a6aff',
   },
   button: {
     backgroundColor: COLORS.primary,
-    paddingVertical: 18,
+    paddingVertical: 14,
     borderRadius: 12,
     marginBottom: 24,
     shadowColor: '#3b82f6',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: 1,
     width: '100%',
   },
   buttonText: {
@@ -249,11 +274,9 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     flex: 1,
-   backgroundColor:COLORS.primary,
+    backgroundColor: COLORS.primary,
     paddingVertical: 14,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
     marginHorizontal: 4,
     alignItems: 'center',
   },
