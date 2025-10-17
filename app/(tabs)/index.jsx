@@ -10,6 +10,7 @@ import MenuScreen from "../../pages/Menu.jsx"
 import FavoritesScreen from "../../pages/favorites.jsx"
 import { useState } from 'react';
 import { StackScreen } from 'react-native-screens';
+import {ProfileScreen} from "../../pages/profile.jsx"
 
 const Stack = createNativeStackNavigator();
 const{favorites,setFavorites} = useState([]);
@@ -35,6 +36,8 @@ export default function TabOneScreen() {
         </Stack.Screen> */}
         <Stack.Screen name='Dishes' component={MenuScreen}/>
         <Stack.Screen name='favorites' component={FavoritesScreen}/> 
+        <Stack.Screen name='profile' component={ProfileScreen}/> 
+
       </Stack.Navigator>
   );
 }
