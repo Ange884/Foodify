@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView,
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import Navbar from '@/components/Navbar';
 
 const { width } = Dimensions.get('window');
 
@@ -52,6 +53,7 @@ export default function ProfileScreen({ user, setUser }) {
             // Clear user state and redirect to signup
             setUser(null);
             navigation.replace('Signup'); // navigate to Signup page
+            console.log("you are signed out!")
           } 
         },
       ]
@@ -59,6 +61,7 @@ export default function ProfileScreen({ user, setUser }) {
   };
 
   return (
+    <>
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={pickImage} style={styles.profilePicContainer}>
@@ -137,6 +140,8 @@ export default function ProfileScreen({ user, setUser }) {
         <Text style={styles.deleteText}>Delete Account</Text>
       </TouchableOpacity>
     </ScrollView>
+    <Navbar navigation={navigation}/>
+    </>
   );
 }
 
@@ -227,7 +232,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#333',
-    paddingVertical: 0,
+    paddingVertical: 10,
   },
   eyeIcon: {
     marginLeft: 10,
