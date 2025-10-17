@@ -1,27 +1,43 @@
 // components/Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Navbar({ navigation }) {
+  const [activeTab, setActiveTab] = useState('Home'); // track active tab
+
+  // Helper function to render each nav item
+  const renderNavItem = (label, iconName, fixedHome = false, targetScreen = null) => {
+    const isActive = activeTab === label;
+
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          // 1️⃣ update active tab state
+          setActiveTab(label);
+          // 2️⃣ navigate to the page (if targetScreen is provided)
+          if (targetScreen) navigation.navigate(targetScreen);
+        }}
+        style={[styles.navItem, isActive && !fixedHome && styles.activeItem]}
+      >
+        <Ionicons
+          name={iconName}
+          size={28}
+          color={fixedHome ? '#ff6347' : isActive ? '#ff6347' : '#888'} // Home always red
+        />
+        <Text style={[styles.navText, (isActive || fixedHome) && styles.activeText]}>
+          {label}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.navbar}>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={[styles.navItem, styles.activeItem]}>
-        <Ionicons name="home" size={28} color="#ff6347" />
-        <Text style={[styles.navText, styles.activeText]}>Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Dishes')} style={styles.navItem}>
-        <Ionicons name="restaurant" size={28} color="#888" />
-        <Text style={styles.navText}>Dishes</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Favorites')} style={styles.navItem}>
-        <Ionicons name="heart-outline" size={28} color="#888" />
-        <Text style={styles.navText}>Favorites</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
-        <Ionicons name="person-outline" size={28} color="#888" />
-        <Text style={styles.navText}>Profile</Text>
-      </TouchableOpacity>
+      {renderNavItem('Home', 'home', true, 'Home')}
+      {renderNavItem('Dishes', 'restaurant', false, 'Dishes')}
+      {renderNavItem('Favorites', 'heart-outline', false, 'Favorites')}
+      {renderNavItem('Profile', 'person-outline', false, 'Profile')}
     </View>
   );
 }
@@ -53,7 +69,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   activeItem: {
-    backgroundColor: 'rgba(255, 99, 71, 0.1)',
+    backgroundColor: 'rgba(255, 99, 71, 0.1)', // highlight active tab
   },
   navText: { 
     fontSize: 11, 
@@ -62,6 +78,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   activeText: {
-    color: '#ff6347',
+    color: '#ff6347', // red text for active tab
   },
 });

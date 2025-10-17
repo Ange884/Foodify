@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Image, ScrollView, Dimensions, Touch
 import { Ionicons } from '@expo/vector-icons';
 import Navbar from '../components/Navbar';
 import { COLORS } from '@/constants/Colors';
-
+import MenuScreen from './Menu.jsx';
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
@@ -72,7 +72,9 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.topDishes}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Top Dishes</Text>
-            <TouchableOpacity style={styles.seeAllButton}>
+            <TouchableOpacity style={styles.seeAllButton} onPress={() =>{
+              navigation.navigate('Dishes');
+            }}>
               <Text style={styles.seeAllText}>See All</Text>
               <Ionicons name="chevron-forward" size={18} color="#007bff" />
             </TouchableOpacity>
