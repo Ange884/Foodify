@@ -20,14 +20,14 @@ export default function LandingScreen({ navigation }) {
 
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
-          style={[styles.button,{backgroundColor:COLORS.primary}]}
+          style={[styles.button]}
           onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, {backgroundColor:COLORS.primary}]}
+          style={[styles.button]}
           onPress={() => navigation.navigate('Signup')}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#ff6347',
     marginBottom:10
   },
   subtitle: {
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 10,
     alignItems: 'center',
+    backgroundColor:'#ff6347'
   },
   loginButton: {
     backgroundColor: '#007bff',

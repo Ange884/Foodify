@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { COLORS } from '../../constants/Colors.js'; // You'll need to install react-native-vector-icons for icons
+import HomeScreen from '@/pages/HomePage.jsx';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -56,7 +57,8 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.button,{backgroundColor:COLORS.primary}]} onPress={handleLogin}>
+        <TouchableOpacity 
+        style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   button: { 
-    backgroundColor: '#007bff',
+    backgroundColor: '#ff6347',
     paddingVertical: 16,
     borderRadius: 12,
     marginBottom: 20,

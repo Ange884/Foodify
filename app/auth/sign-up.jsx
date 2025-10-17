@@ -127,12 +127,12 @@ const handleSignup = () => {
           <TouchableOpacity
             style={[styles.button, loading && { opacity: 0.8 }]}
                          onPress={() => {
-                       handleSignup();          // first do signup
+                        handleSignup();          // first do signup
                         navigation.navigate('home'); // then navigate
                    }}
                      disabled={loading}
     >                   
-                    <Text>Sign Up</Text>
+                    <Text style={styles.buttonText}>Sign Up</Text>
                    </TouchableOpacity>
 
           <TouchableOpacity
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     shadowColor: '#3b82f6',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0,
     shadowRadius: 4,
     elevation: 1,
     width: '100%',
