@@ -16,31 +16,26 @@ export default function MenuScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [dishes, setDishes] = useState(initialDishes);
   const [cart, setCart] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const filteredDishes = dishes.filter(dish =>
     dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAddToCart = (id) => {
-    // update dish to mark as favorite
-    const updatedDishes = dishes.map(dish => {
-      if (dish.id === id) {
-        return { ...dish, isFavorite: true };
-      }
-      return dish;
-    });
-    setDishes(updatedDishes);
+  const handleAddToCart = (dish) => {
+  // Add to cart
+  setCart(prevCart => [...prevCart, dish]);
 
-    // add dish to cart
-    const dishToAdd = dishes.find(dish => dish.id === id);
-    if (!cart.some(item => item.id === id)) { // prevent duplicates
-      setCart([...cart, dishToAdd]);
-      Alert.alert('Success', `${dishToAdd.name} added to cart!`);
-    } else {
-      Alert.alert('Notice', `${dishToAdd.name} is already in your cart.`);
+  // Add to favorites if not already there
+  setFavorites(prevFavs => {
+    if (!prevFavs.find(fav => fav.id === dish.id)) {
+      return [...prevFavs, dish];
     }
-  };
+    return prevFavs;
+  });
+};
 
+  
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Our Delicious Menu</Text>
@@ -82,7 +77,7 @@ export default function MenuScreen({ navigation }) {
               </View>
               <TouchableOpacity 
                 style={styles.orderButton} 
-                onPress={() => handleAddToCart(dish.id)}
+                onPress={() => handleAddToCart(dish)}
               >
                 <Text style={styles.orderButtonText}>Add to Cart</Text>
               </TouchableOpacity>
