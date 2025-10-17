@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Navbar from '../components/Navbar';
@@ -7,73 +7,118 @@ import MenuScreen from './Menu.jsx';
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const dishes = [
+    {
+      name: 'Burger Delight',
+      price: '$12.99',
+      image: require("../assets/images/tasty.jpg"),
+      rating: 4.8
+    },
+    {
+      name: 'Pizza Supreme',
+      price: '$15.99',
+      image: require("../assets/images/taste4.jpg"),
+      rating: 4.9
+    },
+    {
+      name: 'Pasta Love',
+      price: '$13.50',
+      image: require("../assets/images/chicken.jpg"),
+      rating: 4.7
+    },
+    {
+      name: 'Salad Fresh',
+      price: '$9.99',
+      image: require("../assets/images/beef.jpg"),
+      rating: 4.6
+    },
+  ];
+
+  const filteredDishes = dishes.filter(dish => 
+    dish.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const displayDishes = searchQuery.length > 0 ? filteredDishes : dishes;
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Search Bar */}
         <View style={styles.searchContainer}>
-          <View style={styles.searchWrapper}>
-            <Ionicons name="search" size={24} color="#888" style={styles.searchIcon} />
-            <TextInput
-              placeholder="Search for dishes..."
+            <View style={styles.searchWrapper}>
+             <Ionicons name="search" size={20} color="#ff6347" style={styles.searchIcon} />
+              <TextInput
               style={styles.searchInput}
-              placeholderTextColor="#888"
-            />
-            <Ionicons name="filter" size={24} color="#007bff" style={styles.filterIcon} />
-          </View>
-        </View>
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+               placeholder="Search for dishes..."
+               placeholderTextColor="#888"
+             />
+              {searchQuery.length > 0 && (
+                <TouchableOpacity onPress={() => setSearchQuery('')}>
+                  <Ionicons name="close-circle" size={20} color="#ff6347" style={styles.clearIcon} />
+                </TouchableOpacity>
+              )}
+                </View>
+</View>
 
-        {/* Large Hero Section */}
-        <View style={[styles.hero]}>
-          <View style={styles.heroContent}>
-            <Text style={styles.heroTitle}>Delicious Meals Delivered To You</Text>
-            <View style={styles.emojiContainer}>
-              <Image
-                source={require("../assets/images/tasty.jpg")}
-                style={styles.foodEmoji}
-                resizeMode="cover"
-              />
-              <Image
-                source={require("../assets/images/taste1.jpg")}
-                style={styles.foodEmoji}
-                resizeMode="cover"
-              />
-              <Image
-                source={require("../assets/images/taste2.jpg")}
-                style={styles.foodEmoji}
-                resizeMode="cover"
-              />
+        {searchQuery.length === 0 && (
+          <>
+            {/* Large Hero Section */}
+            <View style={[styles.hero]}>
+              <View style={styles.heroContent}>
+                <Text style={styles.heroTitle}>Delicious Meals Delivered To You</Text>
+                <View style={styles.emojiContainer}>
+                  <Image
+                    source={require("../assets/images/tasty.jpg")}
+                    style={styles.foodEmoji}
+                    resizeMode="cover"
+                  />
+                  <Image
+                    source={require("../assets/images/taste1.jpg")}
+                    style={styles.foodEmoji}
+                    resizeMode="cover"
+                  />
+                  <Image
+                    source={require("../assets/images/taste2.jpg")}
+                    style={styles.foodEmoji}
+                    resizeMode="cover"
+                  />
+                </View>
+                <Text style={styles.heroSubtitle}>Fast, fresh, and flavorful right at your door</Text>
+                <TouchableOpacity style={styles.heroButton} onPress={()=>{
+                  navigation.navigate('Dishes');
+                }}>
+                  <Text style={styles.heroButtonText}>Explore Menu</Text>
+                  <Ionicons name="arrow-forward" size={20} color="#fff" />
+                </TouchableOpacity>
+              </View>
             </View>
-            <Text style={styles.heroSubtitle}>Fast, fresh, and flavorful right at your door</Text>
-            <TouchableOpacity style={styles.heroButton} onPress={()=>{
-              navigation.navigate('Dishes');
-            }}>
-              <Text style={styles.heroButtonText}>Explore Menu</Text>
-              <Ionicons name="arrow-forward" size={20} color="#fff" />
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        {/* Food Image Section */}
-        <View style={styles.foodSection}>
-          <Image
-            source={require("../assets/images/food.jpg")}
-            style={styles.foodImage}
-            resizeMode="cover"
-          />
-          <View style={styles.foodContent}>
-            <Text style={styles.foodTitle}>Taste the Best Food in Town!</Text>
-            <Text style={styles.foodSubtitle}>Discover amazing flavors from top local chefs</Text>
-            <TouchableOpacity style={styles.viewMenuButton}>
-              <Text style={styles.viewMenuButtonText}>View Menu</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            {/* Food Image Section */}
+            <View style={styles.foodSection}>
+              <Image
+                source={require("../assets/images/food.jpg")}
+                style={styles.foodImage}
+                resizeMode="cover"
+              />
+              <View style={styles.foodContent}>
+                <Text style={styles.foodTitle}>Taste the Best Food in Town!</Text>
+                <Text style={styles.foodSubtitle}>Discover amazing flavors from top local chefs</Text>
+                <TouchableOpacity style={styles.viewMenuButton} onPress={() => navigation.navigate('Dishes')}>
+                  <Text style={styles.viewMenuButtonText}>View Menu</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )}
 
         {/* Top Dishes */}
         <View style={styles.topDishes}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Top Dishes</Text>
+            <Text style={styles.sectionTitle}>{searchQuery.length > 0 ? 'Search Results' : 'Top Dishes'}</Text>
             <TouchableOpacity style={styles.seeAllButton} onPress={() =>{
               navigation.navigate('Dishes');
             }}>
@@ -81,71 +126,36 @@ export default function HomeScreen({ navigation }) {
               <Ionicons name="chevron-forward" size={18} color="#007bff" />
             </TouchableOpacity>
           </View>
-          <ScrollView 
-  showsVerticalScrollIndicator={false}
-  contentContainerStyle={styles.dishGrid}
->
-            <View style={styles.dishCard}>
-              <Image
-                source={require("../assets/images/taste3.jpg")}
-                style={styles.dishImage}
-                resizeMode="cover"
-              />
-              <View style={styles.dishInfo}>
-                <Text style={styles.dishName}>Burger Delight</Text>
-                <Text style={styles.dishPrice}>$12.99</Text>
-                <View style={styles.ratingContainer}>
-                  <Ionicons name="star" size={16} color="#ffd700" />
-                  <Text style={styles.ratingText}>4.8</Text>
-                </View>
-              </View>
+          {searchQuery.length > 0 && filteredDishes.length === 0 ? (
+            <View style={styles.dishGrid}>
+              <Text style={{ textAlign: 'center', padding: 20, fontSize: 16, color: '#666', width: '100%' }}>
+                No dishes found for "{searchQuery}"
+              </Text>
             </View>
-            <View style={styles.dishCard}>
-              <Image
-                source={require("../assets/images/taste4.jpg")}
-                style={styles.dishImage}
-                resizeMode="cover"
-              />
-              <View style={styles.dishInfo}>
-                <Text style={styles.dishName}>Pizza Supreme</Text>
-                <Text style={styles.dishPrice}>$15.99</Text>
-                <View style={styles.ratingContainer}>
-                  <Ionicons name="star" size={16} color="#ffd700" />
-                  <Text style={styles.ratingText}>4.9</Text>
+          ) : (
+            <ScrollView 
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.dishGrid}
+            >
+              {displayDishes.map((dish, index) => (
+                <View key={index} style={styles.dishCard}>
+                  <Image
+                    source={dish.image}
+                    style={styles.dishImage}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.dishInfo}>
+                    <Text style={styles.dishName}>{dish.name}</Text>
+                    <Text style={styles.dishPrice}>{dish.price}</Text>
+                    <View style={styles.ratingContainer}>
+                      <Ionicons name="star" size={16} color="#ffd700" />
+                      <Text style={styles.ratingText}>{dish.rating}</Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View style={styles.dishCard}>
-              <Image
-                source={require("../assets/images/chicken.jpg")}
-                style={styles.dishImage}
-                resizeMode="cover"
-              />
-              <View style={styles.dishInfo}>
-                <Text style={styles.dishName}>Pasta Love</Text>
-                <Text style={styles.dishPrice}>$13.50</Text>
-                <View style={styles.ratingContainer}>
-                  <Ionicons name="star" size={16} color="#ffd700" />
-                  <Text style={styles.ratingText}>4.7</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.dishCard}>
-              <Image
-                source={require("../assets/images/beef.jpg")}
-                style={styles.dishImage}
-                resizeMode="cover"
-              />
-              <View style={styles.dishInfo}>
-                <Text style={styles.dishName}>Salad Fresh</Text>
-                <Text style={styles.dishPrice}>$9.99</Text>
-                <View style={styles.ratingContainer}>
-                  <Ionicons name="star" size={16} color="#ffd700" />
-                  <Text style={styles.ratingText}>4.6</Text>
-                </View>
-              </View>
-            </View>
-          </ScrollView>
+              ))}
+            </ScrollView>
+          )}
         </View>
 
         {/* Additional spacing */}
@@ -167,38 +177,48 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    paddingTop: 50, // For status bar
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    backgroundColor: '#fff',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  searchWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f8f9fa',
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    height: 50,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  searchIcon: {
-    marginRight: 12,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#333',
-    paddingVertical: 0,
-  },
+  paddingTop: 50, // For status bar
+  paddingHorizontal: 20,
+  paddingBottom: 15,
+  backgroundColor: '#fff',
+  elevation: 6,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  borderRadius: 20,
+  marginBottom: 20,
+},
+
+searchWrapper: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#f1f1f1',
+  borderRadius: 25,
+  paddingHorizontal: 15,
+  height: 45,
+  elevation: 2,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.05,
+  shadowRadius: 2,
+},
+
+searchIcon: {
+  marginRight: 10,
+},
+
+searchInput: {
+  flex: 1,
+  fontSize: 16,
+  color: '#333',
+  paddingVertical: 10,
+},
+
+clearIcon: {
+  marginLeft: 8,
+},
+
   filterIcon: {
     marginLeft: 8,
   },
