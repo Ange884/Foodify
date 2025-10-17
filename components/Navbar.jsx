@@ -13,9 +13,9 @@ export default function Navbar({ navigation }) {
     return (
       <TouchableOpacity
         onPress={() => {
-          // 1️⃣ update active tab state
+          // update active tab state
           setActiveTab(label);
-          // 2️⃣ navigate to the page (if targetScreen is provided)
+          // navigate to the page (if targetScreen is provided)
           if (targetScreen) navigation.navigate(targetScreen);
         }}
         style={[styles.navItem, isActive && !fixedHome && styles.activeItem]}
@@ -34,7 +34,7 @@ export default function Navbar({ navigation }) {
 
   return (
     <View style={styles.navbar}>
-      {renderNavItem('Home', 'home', true, 'Home')}
+      {renderNavItem('Home', 'home', false, 'Home')}
       {renderNavItem('Dishes', 'restaurant', false, 'Dishes')}
       {renderNavItem('Favorites', 'heart-outline', false, 'favorites')}
       {renderNavItem('Profile', 'person-outline', false, 'Profile')}

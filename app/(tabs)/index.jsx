@@ -21,7 +21,7 @@ export default function TabOneScreen() {
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="home" component={HomeScreen} />
-        <Stack.Screen name="Dishes">
+        {/* <Stack.Screen name="Dishes">
           {props => (
             <MenuScreen 
               {...props} 
@@ -29,10 +29,11 @@ export default function TabOneScreen() {
               setFavorites={setFavorites} 
             />
           )}
-        </Stack.Screen>
+        </Stack.Screen> */}
         {/* <Stack.Screen name="Favorites">
           {props => <FavoritesScreen {...props} favorites={favorites} />}
         </Stack.Screen> */}
+        <Stack.Screen name='Dishes' component={MenuScreen}/>
         <Stack.Screen name='favorites' component={FavoritesScreen}/> 
       </Stack.Navigator>
   );
