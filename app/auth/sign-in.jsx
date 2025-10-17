@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <View style={styles.inputWrapper}>
-            <Icon name="email" size={20} color="#773703ff" style={styles.inputIcon} />
+            <Icon name="email" size={20} color="#ff6347" style={styles.inputIcon} />
             <TextInput
               placeholder="Enter your email"
               style={styles.input}
@@ -46,7 +46,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
           <View style={styles.inputWrapper}>
-            <Icon name="lock" size={20} color="#773703ff" style={styles.inputIcon} />
+            <Icon name="lock" size={20} color="#ff6347" style={styles.inputIcon} />
             <TextInput
               placeholder="Enter your password"
               style={styles.input}
@@ -58,18 +58,21 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         <TouchableOpacity 
-        style={styles.button} onPress={handleLogin}>
+        style={styles.button} onPress= {()=>{
+                 {handleLogin}
+                 navigation.navigate("home")
+        }}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <View style={styles.socialContainer}>
           <Text style={styles.orText}>Or sign in with</Text>
           <View style={styles.socialButtons}>
-            <TouchableOpacity style={[styles.socialButton,{backgroundColor:COLORS.primary}]} onPress={handleGoogleSignIn}>
+            <TouchableOpacity style={[styles.socialButton]} onPress={handleGoogleSignIn}>
               <Icon name="login" size={20} color="#fff" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Google</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.socialButton, styles.appleButton,{backgroundColor:COLORS.primary}]} onPress={handleAppleSignIn}>
+            <TouchableOpacity style={[styles.socialButton]} onPress={handleAppleSignIn}>
               <Icon name="apple" size={20} color="#fff" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Apple</Text>
             </TouchableOpacity>
@@ -149,8 +152,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     shadowColor: '#007bff',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
+    elevation: 5,
   },
   buttonText: { 
     color: '#fff', 
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
   socialButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#db4437',
+    backgroundColor: '#ff6347',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,

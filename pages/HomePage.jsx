@@ -78,10 +78,9 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.dishScrollContent}
-          >
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={styles.dishGrid}
+>
             <View style={styles.dishCard}>
               <Image
                 source={require("../assets/images/taste3.jpg")}
@@ -341,12 +340,19 @@ const styles = StyleSheet.create({
   dishScrollContent: {
     paddingRight: 20,
   },
-  dishCard: {
-    width: Math.min((width - 60) / 2.2, 160),
+  dishGrid: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  paddingHorizontal: 10,
+},
+
+ dishCard: {
+    width: '48%',
+    marginBottom:15,
     backgroundColor: '#fff',
     borderRadius: 20,
     padding: 15,
-    marginRight: 15,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

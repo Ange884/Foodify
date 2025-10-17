@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     color: '#6b6a6aff',
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: '#ff6347',
     paddingVertical: 14,
     borderRadius: 12,
     marginBottom: 24,
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: '#ff6347',
     paddingVertical: 14,
     borderRadius: 10,
     marginHorizontal: 4,
