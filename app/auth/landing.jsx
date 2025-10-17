@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { COLORS } from '../../constants/Colors.js';
+import { ScrollView } from 'react-native';
 
 export default function LandingScreen({ navigation }) {
   return (
+    <ScrollView contentContainerStyle={[styles.container,{flexGrow:1,justifyContent:"center",alignItems:"center"}]}>
     <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
     <View style={{backgroundColor:COLORS.background}}>
     <View style={[styles.container]}>
@@ -36,6 +38,7 @@ export default function LandingScreen({ navigation }) {
     </View>
     </View>
     </View>
+    </ScrollView>
   );
 }
 

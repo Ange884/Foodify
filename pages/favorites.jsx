@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Navbar from '@/components/Navbar';
 
 const { width } = Dimensions.get('window');
 
-export default function FavoritesScreen({ favorites=[] }) {
+export default function FavoritesScreen({ favorites=[],navigation }) {
   const [search, setSearch] = useState('');
 
   // Filter favorites based on search input
@@ -71,6 +72,8 @@ export default function FavoritesScreen({ favorites=[] }) {
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      <Navbar navigation={navigation}/>
     </View>
   );
 }

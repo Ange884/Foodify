@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert,width,height } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { COLORS } from '../../constants/Colors.js'; // You'll need to install react-native-vector-icons for icons
 import HomeScreen from '@/pages/HomePage.jsx';
@@ -24,7 +24,6 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.screen}>
       <View style={styles.container}>
         <Text style={styles.title}>Welcome Back !</Text>
         
@@ -86,18 +85,10 @@ export default function LoginScreen({ navigation }) {
 
         </TouchableOpacity>
       </View>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
   container: {
     width: '100%',
     maxWidth: 400,

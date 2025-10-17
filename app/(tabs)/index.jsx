@@ -9,6 +9,7 @@ import HomeScreen from "../../pages/HomePage.jsx"
 import MenuScreen from "../../pages/Menu.jsx"
 import FavoritesScreen from "../../pages/favorites.jsx"
 import { useState } from 'react';
+import { StackScreen } from 'react-native-screens';
 
 const Stack = createNativeStackNavigator();
 const{favorites,setFavorites} = useState([]);
@@ -22,17 +23,17 @@ export default function TabOneScreen() {
         <Stack.Screen name="home" component={HomeScreen} />
         <Stack.Screen name="Dishes">
           {props => (
-            <DishesScreen 
+            <MenuScreen 
               {...props} 
               favorites={favorites} 
               setFavorites={setFavorites} 
             />
           )}
         </Stack.Screen>
-
-        <Stack.Screen name="Favorites">
+        {/* <Stack.Screen name="Favorites">
           {props => <FavoritesScreen {...props} favorites={favorites} />}
-        </Stack.Screen>
+        </Stack.Screen> */}
+        <Stack.Screen name='favorites' component={FavoritesScreen}/> 
       </Stack.Navigator>
   );
 }
