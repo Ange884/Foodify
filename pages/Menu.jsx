@@ -1,29 +1,50 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Navbar from '@/components/Navbar';
-import { navigate } from 'expo-router/build/global-state/routing';
 
-const dishes = [
-  { name: 'Burger Delight', price: '$12.99', image: require('../assets/images/taste3.jpg'), rating: 4.8 },
-  { name: 'Pizza Supreme', price: '$15.99', image: require('../assets/images/taste4.jpg'), rating: 4.9 },
-  { name: 'Pasta Love', price: '$13.50', image: require('../assets/images/chicken.jpg'), rating: 4.7 },
-  { name: 'Salad Fresh', price: '$9.99', image: require('../assets/images/beef.jpg'), rating: 4.6 },
-  { name: 'Sushi Roll', price: '$11.99', image: require('../assets/images/taste2.jpg'), rating: 4.9 },
-  { name: 'Beef Steak', price: '$17.50', image: require('../assets/images/taste1.jpg'), rating: 4.8 },
+const initialDishes = [
+  { id: 1, name: 'Burger Delight', price: '$12.99', image: require('../assets/images/taste3.jpg'), rating: 4.8, isFavorite: false },
+  { id: 2, name: 'Pizza Supreme', price: '$15.99', image: require('../assets/images/taste4.jpg'), rating: 4.9, isFavorite: false },
+  { id: 3, name: 'Pasta Love', price: '$13.50', image: require('../assets/images/chicken.jpg'), rating: 4.7, isFavorite: false },
+  { id: 4, name: 'Salad Fresh', price: '$9.99', image: require('../assets/images/beef.jpg'), rating: 4.6, isFavorite: false },
+  { id: 5, name: 'Sushi Roll', price: '$11.99', image: require('../assets/images/taste2.jpg'), rating: 4.9, isFavorite: false },
+  { id: 6, name: 'Beef Steak', price: '$17.50', image: require('../assets/images/taste1.jpg'), rating: 4.8, isFavorite: false },
 ];
 
-
-export default function MenuScreen() {
+export default function MenuScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [dishes, setDishes] = useState(initialDishes);
+  const [cart, setCart] = useState([]);
 
   const filteredDishes = dishes.filter(dish =>
     dish.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleAddToCart = (id) => {
+    // update dish to mark as favorite
+    const updatedDishes = dishes.map(dish => {
+      if (dish.id === id) {
+        return { ...dish, isFavorite: true };
+      }
+      return dish;
+    });
+    setDishes(updatedDishes);
+
+    // add dish to cart
+    const dishToAdd = dishes.find(dish => dish.id === id);
+    if (!cart.some(item => item.id === id)) { // prevent duplicates
+      setCart([...cart, dishToAdd]);
+      Alert.alert('Success', `${dishToAdd.name} added to cart!`);
+    } else {
+      Alert.alert('Notice', `${dishToAdd.name} is already in your cart.`);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Our Delicious Menu</Text>
+
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="#ff6347" style={styles.searchIcon} />
         <TextInput
@@ -39,6 +60,7 @@ export default function MenuScreen() {
           </TouchableOpacity>
         )}
       </View>
+
       <ScrollView contentContainerStyle={styles.dishGrid}>
         {filteredDishes.length === 0 ? (
           <View style={styles.emptyContainer}>
@@ -47,8 +69,8 @@ export default function MenuScreen() {
             <Text style={styles.emptySubtext}>Try searching for something else.</Text>
           </View>
         ) : (
-          filteredDishes.map((dish, index) => (
-            <View key={index} style={styles.dishCard}>
+          filteredDishes.map((dish) => (
+            <View key={dish.id} style={styles.dishCard}>
               <View style={styles.imageContainer}>
                 <Image source={dish.image} style={styles.dishImage} />
               </View>
@@ -58,15 +80,19 @@ export default function MenuScreen() {
                 <Ionicons name="star" size={18} color="#ffd700" />
                 <Text style={styles.ratingText}>{dish.rating}</Text>
               </View>
-              <TouchableOpacity style={styles.orderButton}>
+              <TouchableOpacity 
+                style={styles.orderButton} 
+                onPress={() => handleAddToCart(dish.id)}
+              >
                 <Text style={styles.orderButtonText}>Add to Cart</Text>
               </TouchableOpacity>
             </View>
           ))
         )}
       </ScrollView>
-      {/*Navbar */}
-      <Navbar navigation={navigation}/>
+
+      {/* Navbar */}
+      <Navbar navigation={navigation} />
     </View>
   );
 }
