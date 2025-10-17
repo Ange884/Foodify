@@ -36,7 +36,7 @@ export default function Navbar({ navigation }) {
     <View style={styles.navbar}>
       {renderNavItem('Home', 'home', true, 'Home')}
       {renderNavItem('Dishes', 'restaurant', false, 'Dishes')}
-      {renderNavItem('Favorites', 'heart-outline', false, 'Favorites')}
+      {renderNavItem('Favorites', 'heart-outline', false, 'favorites')}
       {renderNavItem('Profile', 'person-outline', false, 'Profile')}
     </View>
   );

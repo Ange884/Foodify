@@ -7,6 +7,7 @@ import LoginScreen from "../auth/sign-in.jsx"
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from "../../pages/HomePage.jsx"
 import MenuScreen from "../../pages/Menu.jsx"
+import FavoritesScreen from "../../pages/favorites.jsx"
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function TabOneScreen() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="home" component={HomeScreen} />
         <Stack.Screen name="Dishes" component={MenuScreen} />
+        <Stack.Screen name="favorites" component={FavoritesScreen} />
       </Stack.Navigator>
   );
 }
