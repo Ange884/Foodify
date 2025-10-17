@@ -45,7 +45,9 @@ export default function HomeScreen({ navigation }) {
               />
             </View>
             <Text style={styles.heroSubtitle}>Fast, fresh, and flavorful right at your door</Text>
-            <TouchableOpacity style={styles.heroButton}>
+            <TouchableOpacity style={styles.heroButton} onPress={()=>{
+              navigation.navigate('Dishes');
+            }}>
               <Text style={styles.heroButtonText}>Explore Menu</Text>
               <Ionicons name="arrow-forward" size={20} color="#fff" />
             </TouchableOpacity>
